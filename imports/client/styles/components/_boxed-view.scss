@@ -1,0 +1,49 @@
+//is going to contain the styles necessary to create a box style view
+.boxed-view {
+    //aligns things into the center of the screen height wise
+    align-items: center;
+    //background color to stretch out the whole width of the screen
+    background: $boxed-view-overlay-bg;
+    //flexbox
+    display: flex;
+    //centering thinigs in the text
+    justify-content: center;
+    //viewport height - will take 100% of the viewport height
+    //essentially a full height box
+    height: 100vh;
+    //viewport width
+    width: 100vw;
+}
+
+.boxed-view--modal {
+    background: fade-out($boxed-view-overlay-bg, .3);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+//tossing every thing into a box
+.boxed-view__box {
+    background-color: $boxed-view-bg;
+    padding: 2.4rem;
+    //centering everything inside the box
+    text-align: center;
+    width: 24rem;
+}
+
+.boxed-view__form {
+    display: flex;
+    flex-direction: column;
+
+}
+
+h1 {
+    font-weight: 300; 
+    margin-bottom: 1.4rem;
+}
+
+a {
+    color: black;
+}

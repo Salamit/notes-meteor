@@ -1,0 +1,12 @@
+//this is a partial file hence it begins with an underscore
+//this file will load in other partials
+//the name that is.
+//loading variables before base
+@import './variables';
+@import './base';
+@import './components/boxed-view';
+@import './components/button';
+@import './components/header';
+@import './components/page-content';
+@import './components/checkbox';
+@import './components/item';
