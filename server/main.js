@@ -23,6 +23,10 @@ import '../imports/api/users';
 //the errors that are thrown by letting us throw meteor errors
 import '../imports/startup/simple-schema-configuration.js';
 
+//we should import notes into the server to make sure the collection is created
+//and the methods get registered. 
+import '../imports/api/notes';
+
 //defaulting momemnt to format time
 // import moment from 'moment';
 

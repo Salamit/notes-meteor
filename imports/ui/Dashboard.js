@@ -7,7 +7,11 @@ import { Link } from 'react-router-dom';
 
 
 //importing PrivateHeader
+//this is our containerized component
 import PrivateHeader from './PrivateHeader';
+// getting our default export NoteList from NoteList
+import NoteList from './NoteList';
+
 
 //import { withRouter } from 'react-router-dom';
 //import createBrowserHistory from 'history/createBrowserHistory';
@@ -102,9 +106,13 @@ export default () => {
                 onClick={this.onLogout.bind(this)}>
                 Logout
             </button> */}
+            {/* We render the containerized component passing in a single prop */}
             <PrivateHeader title="Dashboard"/>
             <div className="page-content">
-                Dashboard page content
+                {/* Creating an instance of notelist without props 
+                becaue the containerized version will render the props */}
+                {/* Rendering our NoteList component */}
+                <NoteList/>
             </div>
             
         </div>

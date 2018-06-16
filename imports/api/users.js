@@ -3,24 +3,48 @@ import { Meteor } from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
 import { Accounts } from 'meteor/accounts-base';
 
-Accounts.validateNewUser((user) => {
-    //getting the email out of the user object
-    const email = user.emails[0].address;
+/* validateNewUser, is the value of the function
+We can use this value once it is imported as values to 
+test against */
+export const validateNewUser = (user) => {
+  //getting the email out of the user object
+  const email = user.emails[0].address;
 
-  //schema to validate user email
-  new SimpleSchema({
-    email: {
-      type: String,
-      regEx: SimpleSchema.RegEx.Email
-    }
-    //valideting the user email above through the es6 syntax
-  }).validate({ email })
+//schema to validate user email
+new SimpleSchema({
+  email: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Email
+  }
+  //valideting the user email above through the es6 syntax
+}).validate({ email })
 
-    //console.log('this is the user', user);
-    //to allow the user to be created do this
-    return true;
+  //console.log('this is the user', user);
+  //to allow the user to be created do this
+  return true;
 
-  });
+};
+
+  /*the console returns an the following error when we call Accounts.validateNewUser
+            "    Uncaught TypeError: Accounts.validateNewUser is not a function
+                at users.js (app.js:52)
+                at fileEvaluate (modules-runtime.js:353)
+                at require (modules-runtime.js:248)
+                at users.test.js (app.js:140)
+                at fileEvaluate (modules-runtime.js:353)
+                at require (modules-runtime.js:248)
+                at app.js:254"
+            This is because validateNewUser is only available to the server. 
+            It is a server defined method. To fix this, we add the following to the
+            users.js file 
+            if (Meteor.isServer) {
+                Accounts.validateNewUser(validateNewUser);
+            } */
+
+  /*if the environment is Meteor.isServer then we call the below */
+ if (Meteor.isServer) {//passing the value validateNewUser
+  Accounts.validateNewUser(validateNewUser);
+}
 //the below is the type of error we want to throw when
 //something goes wrong in meteor
   // //throw an error and try to catch the error

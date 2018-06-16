@@ -3,13 +3,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Accounts } from 'meteor/accounts-base';
+import { createContainer } from 'meteor/react-meteor-data';
+
+//new prop types package. The older version is depreciated.
+import PropTypes from 'prop-types';
 
 //methods needed to signing up a new user lives here
-'meteor/accounts-base'
+//'meteor/accounts-base'
 
 
 //component for creating signup page
-export default class Signup extends React.Component {
+export class Signup extends React.Component {
   constructor(props) {
     super(props);
     //setting state -> this an exception to setting state
@@ -43,7 +47,7 @@ export default class Signup extends React.Component {
     }
 
     //create user object
-    Accounts.createUser({email, password}, (err) => {
+    this.props.createUser({email, password}, (err) => {
 
       //logs error to the console
       //console.log('Signup callback', err);
@@ -105,3 +109,21 @@ export default class Signup extends React.Component {
   //create imports/ui/ add Signup.js
   //Define component and export as default
   //Import and use
+
+  //since we are passing in a prop we need to
+  //provide proptypes
+  Signup.propTypes = {
+    createUser: PropTypes.func.isRequired
+  }
+  
+  //default export which is  a 
+  //containerized version of signup - accounts.user gets called here
+  export default createContainer(() => {
+    return {
+      //providing the prop for the method account.user
+      createUser: Accounts.createUser
+
+    };
+
+
+  }, Signup);
