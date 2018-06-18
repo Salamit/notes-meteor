@@ -34,6 +34,10 @@ export const NoteListHeader = (props) => {
 
 }
 
+NoteListHeader.PropTypes = {
+    meteorCall: PropTypes.func.isRequired
+};
+
 
 
 //creating a contanerized version of NoteListHeader

@@ -70,8 +70,6 @@ if (Meteor.isClient) {
             //expecting the the email passed in to be equal to the email
             //property set above
             expect(spy.calls[0].arguments[0].toEqual({ email, password }));
-           
-
         });
 
         it('should set error with short password', function () {

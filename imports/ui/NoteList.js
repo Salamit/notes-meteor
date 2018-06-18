@@ -11,8 +11,14 @@ import PropTypes from 'prop-types';
 import { Notes } from '../api/notes';
 import NoteListHeader from './NoteListHeader';
 import NoteListItem from './NoteListItem';
+import NoteListEmptyItem from './NoteListEmptyItem'
 
-//creating our component - a stateless functional component
+
+//3. Conditionally render noteList item -  Setup noteList to render empty not message when notes array is empty */
+
+
+
+//creating our component - a stateless functional component  and a named export 
 export const NoteList = (props) => {
     return (
         <div>
@@ -20,7 +26,13 @@ export const NoteList = (props) => {
             {/* Use the map method to cover notes array into jsx array
             Set up key prop equal to notes _id 
         Setup note prop*/}
-            { props.notes.map((note) => {
+        {/* Conditionally render noteList item -  Setup noteList to render empty not message when notes array is empty */ }
+            { props.notes.length === 0 ? <NoteListEmptyItem/> : undefined }
+           { props.notes.map((note) => {
+            /* Another way to conditionally render
+            //if (props.notes.length === 0){
+                //render NoteListEmptyItem
+            } */
             /* an instance of the NoteListItem with two props, the first being
             Id and the second being the note */
              return <NoteListItem key={note._id} note={note}/> 
