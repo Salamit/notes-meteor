@@ -6,24 +6,25 @@ import { Meteor } from 'meteor/meteor';
 
 //importing the named export NoteList
 import { NoteList } from './NoteList';
-
+import { notes } from '../fixtures/fixtures';
 //dummy data - this will be passed into note list as test data
-const notes = [
-    {
-        _id: 'noteId1',
-        title: 'Test title',
-        body: '',
-        updatedAt: 0,
-        userId: 'userId1'
-    }, {
-        _id: 'noteId2',
-        title: '',
-        body: 'Something is here',
-        updatedAt: 0,
-        userId: 'userId2'
+//we are going to put this in a fixture file. 
+// const notes = [
+//     {
+//         _id: 'noteId1',
+//         title: 'Test title',
+//         body: '',
+//         updatedAt: 0,
+//         userId: 'userId1'
+//     }, {
+//         _id: 'noteId2',
+//         title: '',
+//         body: 'Something is here',
+//         updatedAt: 0,
+//         userId: 'userId2'
 
-    }
-]
+//     }
+// ]
 
 if (Meteor.isClient) {
     describe('NoteList', function () {

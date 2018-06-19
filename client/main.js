@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom';
 //importing named export session to use Session
 import { Session } from 'meteor/session';
 
+//import createHistory from 'history/createBrowserHistory';
+
 //To create routes we need 3 things
 //import { browserHistory} from 'react-router';
 //had issues with the line above and got a solution.
@@ -14,7 +16,7 @@ import { Session } from 'meteor/session';
 //After trial 3 here is a confirmed working solution
 import { Routes, onAuthChange, history } from '.././imports/routes/Routes';
 //import { Router, Route, Switch } from 'react-router-dom';
-import {createBrowserHistory } from 'history/createBrowserHistory';
+//import {createBrowserHistory } from 'history/createBrowserHistory';
 //import createBrowserHistory from 'history/createBrowserHistory';
 //import { withRouter } from 'react-router-dom';
 import { Tracker } from 'meteor/tracker';
@@ -23,6 +25,8 @@ import Redirect from 'react-router-dom/Redirect';
 //the errors that are thrown by letting us throw meteor errors
 import '../imports/startup/simple-schema-configuration.js';
 
+//we create a browserHistory variable to be used to replae the url
+//export const history = createHistory()
 
 //import the new collection into the server file
 //to create the collection
@@ -192,6 +196,28 @@ Meteor.startup(() => {
   /* to see how changes in showVisible affect what is rendered to the screen
   this was used in the console
   require('meteor/session').Session.set('showVisible', true); */
+
+
+  //We will select a tracker.autorun. The reason is to watch for changes in selectedNoteId
+  //and when that happens, update the url and when a note is picked, the url changes
+  //to have the note's url inside it
+  Tracker.autorun(() => { 
+  //fetching the session value in order to have autorun reload
+    const selectedNoteId = Session.get('selectedNoteId')
+    
+    /* selectedNoteId will return a string if there is a noteId
+    in that case we would want to update the url */
+    //   when the selected noteId changes, we update the url accordingly
+    if (selectedNoteId){
+      //here we update the url of the page with the url of the note
+      history.replace(`/dashboard/${selectedNoteId}`);
+      /* Because we made a new route, we also have to set that up in the
+      route.js file- take a look at that file to see */
+    }
+  });
+  //this is the default value for the session variable
+  //two arguments are passed in, the key and the value - the key is selectedNoteId, 
+  Session.set('selectedNoteId', undefined)
 
   ReactDOM.render(<Routes />, document.getElementById('app'));
   
