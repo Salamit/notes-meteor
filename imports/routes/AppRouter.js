@@ -3,10 +3,15 @@ import React from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 //importing createHistory so as to be able to replace the url using history.replace
 import createHistory from 'history/createBrowserHistory';
+import { Session } from 'meteor/session';
+
+import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
 import Signup from '../ui/Signup';
+import Dashboard from '../ui/Dashboard';
 import NotFound from '../ui/NotFound';
 import Login from '../ui/Login';
-import Dashboard from '../ui/Dashboard';
+
 
  
 
@@ -25,15 +30,22 @@ export const history = createHistory()
 //all pages the user should not be able to visit
 //if they are not authenticated
 
-const unauthenticatedPages = ['/', '/signup'];
+//commented these lines out due to 
+//https://github.com/andrewjmead/notes-meteor-course/compare/master...rr4-demo?expand=1
+/* const unauthenticatedPages = ['/', '/signup'];
 
 //pages that can be visited if you are authenticated
 
-const authenticatedPages = ['/dashboard'];
+const authenticatedPages = ['/dashboard']; */
 
 
 
-export const onAuthChange = (isAuthenticated) => {
+
+//commented these lines out due to 
+//https://github.com/andrewjmead/notes-meteor-course/compare/master...rr4-demo?expand=1
+
+/* export const onAuthChange = (isAuthenticated) => {
+    
     //this is the current pathname of the user
   const pathname = history.location.pathname;
   //this will be true if user is on a page not requiring authentication
@@ -50,18 +62,22 @@ export const onAuthChange = (isAuthenticated) => {
     //console.log("redirect");
   }
 
-};
+}; */
+
+
+
 
   
 
-export const Routes = () => (
+export const AppRouter = () => (
     <Router history={history}>
         <Switch>
-            <Route path="/" component={Login} exact={true}/>
-            <Route path="/signup" component={Signup}/>
-            <Route path="/dashboard" component={Dashboard} />
+            {/* https://www.udemy.com/meteor-react/learn/v4/questions/2269304 */}
+            <PublicRoute  path="/" component={Login} exact={true}/>
+            <PublicRoute  path="/signup" component={Signup}/>
+            <PrivateRoute path="/dashboard" component={Dashboard} exact={true} />
             {/* This is the route for the individual notes */}
-            <Route path="/dashboard/:id" component={Dashboard} />
+            <PrivateRoute path="/dashboard/:id" component={Dashboard} />
             <Route path="*" component={NotFound} />
         </Switch>
     </Router>

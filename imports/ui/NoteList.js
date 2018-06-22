@@ -4,6 +4,8 @@ import { createContainer } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 //new prop types package. The older version is depreciated.
 import PropTypes from 'prop-types';
+//Importing Session to use Session 
+import { Session } from 'meteor/session';
 
 
 //importing our named export called notes
@@ -52,16 +54,33 @@ NoteList.propTypes = {
 //creating our containerized component - it is kind of like auto. It will rerun when
 //our notes change
 export default createContainer(() => {
+    /* we need to get the value for selected noteId 
+    this function will run everytime the selectedNoteId changes*/
+    const selectedNoteId = Session.get('selectedNoteId');
     //we want to fetch the notes
     //to do that we want to subscribe to the publication
     Meteor.subscribe('notes');
 
     //to fetch the data from the database
     return { 
+        /* createContainer runs everytime notes changes
+        For example, if the user makes new notes, createContainer reruns */
         //notes will be a list of all the notes available for 
         //this user to edit
         //we need to access our api - to dop this we need to inport 
-        notes: Notes.find().fetch() //Notes.find retuns all notes that this user has access to, fetch allows for 
-        //an array of notes to be found. The array of notes gets passed as a prop into our component
+        //Notes.find retuns all notes that this user has access to, the fetch  
+        // method returns an array of notes found. The array of notes gets passed as a prop into our component
+        //take notes add selected propperty to object
+        //set to true if match, false if not
+        notes: Notes.find().fetch().map((note) => {
+            return {
+                //this keeps the exiting properties of the note
+                ...note,
+                //this line adds an addtional property
+                selected: note._id === selectedNoteId ? true : false,
+
+            }    
+            
+        }) 
     };
 }, NoteList);

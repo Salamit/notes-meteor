@@ -22,11 +22,17 @@ export const NoteListItem = (props) => {
             props.Session.set('selectedNoteId', props.note._id);
             }}>
             <h5>{ props.note.title || 'Untitled note' }</h5>
+            {/* this will show to the screen if the note is selected or not
+            if the note is selected return selected otherwise show undefined */}
+
+            { props.note.selected ? 'selected' : undefined }
             <p>{ moment(props.note.updatedAt).format('M/DD/YY') }</p>
         </div>
-
+        
     );
 }
+
+
 
 NoteListItem.propTypes = {
     note: PropTypes.object.isRequired,

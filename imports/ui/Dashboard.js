@@ -1,6 +1,7 @@
+import { Meteor } from 'meteor/meteor';
 import React from 'react';
 
-import { Meteor } from 'meteor/meteor';
+
 import { Link } from 'react-router-dom';
 //import links - deleted in lecture 90
 // import { Links } from '../api/links';
@@ -116,6 +117,7 @@ export default () => {
             </div>
             
         </div>
-    );  
+    ); 
     
 };
+
