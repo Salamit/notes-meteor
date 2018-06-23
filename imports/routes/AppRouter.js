@@ -8,7 +8,7 @@ import { Session } from 'meteor/session';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 import Signup from '../ui/Signup';
-import Dashboard from '../ui/Dashboard';
+import { Dashboard } from '../ui/Dashboard';
 import NotFound from '../ui/NotFound';
 import Login from '../ui/Login';
 

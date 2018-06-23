@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import PrivateHeader from './PrivateHeader';
 // getting our default export NoteList from NoteList
 import NoteList from './NoteList';
+import  Editor from './Editor';
 
 
 //import { withRouter } from 'react-router-dom';
@@ -93,31 +94,36 @@ See the new form of Lnk below */
 //     };
 // };
 
-export default () => {
-    return (
-        <div>
-            {/* This is the header area */}
-            {/* moved this to a link component called PrivateHeader*/}
-            {/* <h1>Your Links</h1>
-            
-            <button 
-                type='button' 
+export class Dashboard extends React.Component {
+//export default () => {
+    render () {
+        //console.log(this)
+        return (
+            <div>
+                {/* This is the header area */}
+                {/* moved this to a link component called PrivateHeader*/}
+                {/* <h1>Your Links</h1>
                 
-                //onClick={() => { this.props.history.push('/'); }}>
-                onClick={this.onLogout.bind(this)}>
-                Logout
-            </button> */}
-            {/* We render the containerized component passing in a single prop */}
-            <PrivateHeader title="Dashboard"/>
-            <div className="page-content">
-                {/* Creating an instance of notelist without props 
-                becaue the containerized version will render the props */}
-                {/* Rendering our NoteList component */}
-                <NoteList/>
+                <button 
+                    type='button' 
+                    
+                    //onClick={() => { this.props.history.push('/'); }}>
+                    onClick={this.onLogout.bind(this)}>
+                    Logout
+                </button> */}
+                {/* We render the containerized component passing in a single prop */}
+                <PrivateHeader title="Dashboard"/>
+                <div className="page-content">
+                    {/* Creating an instance of notelist without props 
+                    becaue the containerized version will render the props */}
+                    {/* Rendering our NoteList component */}
+                    <NoteList/>
+                    <Editor/>
+                </div>
+                
             </div>
-            
-        </div>
-    ); 
+        );
+    } 
     
 };
 
