@@ -7,6 +7,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 //new prop types package. The older version is depreciated.
 import PropTypes from 'prop-types';
+import { Session } from 'meteor/session';
 
 // NoteListHeader - export
 
@@ -25,7 +26,12 @@ export const NoteListHeader = (props) => {
             {/* Render container componeent in NoteList */}
 
             <button onClick={() => {
-                props.meteorCall('notes.insert');
+                props.meteorCall('notes.insert', (err, res) => {
+                    if (res) {
+                        // Session.set res
+                        props.Session.set('selectedNoteId', res);
+                    }
+                });
             }}>Create Note</button>
         </div>
         
@@ -35,7 +41,8 @@ export const NoteListHeader = (props) => {
 }
 
 NoteListHeader.PropTypes = {
-    meteorCall: PropTypes.func.isRequired
+    meteorCall: PropTypes.func.isRequired,
+    Session: PropTypes.object.isRequired
 };
 
 
@@ -46,7 +53,8 @@ export default createContainer(() => {
         //the purpose of this is to pass in Meteor.call
         //so we will create a property meteorCall which we will use to trigger our methods
         //in our test. We will be triggering notes.insert
-        meteorCall: Meteor.call
+        meteorCall: Meteor.call,
+        Session
     }
 
 }, NoteListHeader);

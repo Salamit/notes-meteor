@@ -72,7 +72,12 @@ export default createContainer(() => {
         // method returns an array of notes found. The array of notes gets passed as a prop into our component
         //take notes add selected propperty to object
         //set to true if match, false if not
-        notes: Notes.find().fetch().map((note) => {
+        notes: Notes.find({}, {
+            sort: {
+                'updatedAt': -1
+            }
+        }
+    ).fetch().map((note) => {
             return {
                 //this keeps the exiting properties of the note
                 ...note,

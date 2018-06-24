@@ -14,25 +14,63 @@ import { mount } from 'enzyme';
 import { NoteListHeader } from './NoteListHeader';
 //To use notes, I am importing notes
 import { Notes } from '../api/notes';
+import { notes } from '../fixtures/fixtures';
 
 //If on client, setup describe block
 if (Meteor.isClient) {
     describe('NoteListHeader', function () {
+        let meteorCall;
+        let Session;
+
+        beforeEach(function () {
+            meteorCall = expect.createSpy();
+            Session = {
+                set: expect.createSpy()
+            }
+        })
         
         // it should call meteorCall on click
         it('should call meteorCall on click', function () {
             //1. create a spy
-            const spy = expect.createSpy();
-            const notes = Notes.find().fetch()
+            // const spy = expect.createSpy();
+            // const notes = Notes.find().fetch()
             //2. Render a component with spy
-            const wrapper = mount(<NoteListHeader meteorCall={spy} />);
+            const wrapper = mount(<NoteListHeader meteorCall={meteorCall} Session={Session} />);
             //3. Simulate button click
-            wrapper.find('button').simulate('click')
+            wrapper.find('button').simulate('click');
+            meteorCall.calls[0].arguments[1](undefined, notes[0]._id);
+            
 
             //4. Assert spy was called correctly
-            expect(spy).toHaveBeenCalledWith('notes.insert')
-
+            expect(meteorCall.calls[0].arguments[0]).toBe('notes.insert');
+            expect(Session.set).toHaveBeenCalledWith('selectedNoteId', notes[0]._id);
+            
         });
+
+            // it should not set session for failed insert
+        it('should not set session for failed insert', function () {
+            //1. create a spy
+            // const spy = expect.createSpy();
+            // const notes = Notes.find().fetch()
+            //2. Render a component with spy
+            const wrapper = mount(<NoteListHeader meteorCall={meteorCall} Session={Session} />);
+            //3. Simulate button click
+            wrapper.find('button').simulate('click');
+            //call function with error and no res
+            meteorCall.calls[0].arguments[1]({}, undefined);
+            
+
+            //4. Assert spy was called correctly
+            expect(meteorCall.calls[0].arguments[0]).toBe('notes.insert');
+            //expect session.set to have never been called
+            expect(Session.set).toNotHaveBeenCalled();
+            
+        });
+
+        
+       
+        
+        
 
     });
 }
