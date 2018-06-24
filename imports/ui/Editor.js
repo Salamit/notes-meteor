@@ -87,7 +87,7 @@ export class Editor extends React.Component {
                 <p>
                     {/* Added turnery operator   */}
                     {/* Pick or create a note to get started */}
-                    { this.props.selectedNoteId ? 'Note not found' : ' Pick or create a note to get started'} 
+                    { this.props.selectedNoteId ? 'Note not found' : 'Pick or create a note to get started'} 
                 </p>
             );
 
